@@ -1,6 +1,6 @@
 # Jumpstart Pro dependencies
 gem "devise", github: "excid3/devise", branch: "sign-in-after-reset-password-proc" # "~> 4.9.0"
-gem "devise-i18n", "~> 1.10"
+gem "devise-i18n", "~> 1.15"
 gem "inline_svg", "~> 1.6"
 gem "invisible_captcha", "~> 2.0"
 gem "jumpstart", path: "lib/jumpstart"
