@@ -2,7 +2,7 @@ class Plan < ApplicationRecord
   has_prefix_id :plan
 
   store_accessor :details, :features, :stripe_tax
-  attribute :currency, default: "usd"
+  attribute :currency, default: "gbp"
   normalizes :currency, with: ->(currency) { currency.downcase }
 
   validates :name, :amount, :interval, presence: true
@@ -20,7 +20,7 @@ class Plan < ApplicationRecord
   # Returns a free plan for the Fake Processor
   def self.free
     plan = where(name: "Free").first_or_initialize
-    plan.update(hidden: true, amount: 0, currency: :usd, interval: :month, trial_period_days: 0, fake_processor_id: :free)
+    plan.update(hidden: true, amount: 0, currency: :gbp, interval: :month, trial_period_days: 0, fake_processor_id: :free)
     plan
   end
 
@@ -66,7 +66,7 @@ class Plan < ApplicationRecord
     self.class.monthly.where(name: name).first
   end
 
-  def id_for_processor(processor_name, currency: "usd")
+  def id_for_processor(processor_name, currency: "gbp")
     return if processor_name.nil?
     processor_name = :braintree if processor_name.to_s == "paypal"
     send(:"#{processor_name}_id")

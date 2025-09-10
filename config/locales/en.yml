@@ -28,6 +28,14 @@
 #       enabled: "ON"
 
 en:
+  number:
+    currency:
+      format:
+        unit: "£"
+        format: "%u%n"
+        delimiter: ","
+        separator: "."
+        precision: 2
   are_you_sure: "Are you sure?"
   back: "Back"
   cancel: "Cancel"

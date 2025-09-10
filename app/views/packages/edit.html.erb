@@ -1,0 +1,33 @@
+<div class="my-4 lg:px-4">
+  <div class="container mx-auto sm:px-6 lg:px-8">
+    <%= render "shared/page_header",
+                title: @package.name,
+                breadcrumbs: [
+                { name: "Projects", href: projects_path },
+                { name: @bill.project.name, href: project_path(@bill.project) },
+                { name: "Packages", href: bill_packages_path(@bill) },
+                { name: "Edit" }
+                ] %>
+  </div>
+
+  <%= render partial: "packages/line_items_grid", locals: { package: @package } %>
+</div>
+
+<!-- Bottom fixed totals/controls bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+  <div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 sm:grid-cols-3 items-center gap-4">
+      <div>
+        <div class="text-sm text-slate-600">Number of items</div>
+        <div class="text-xl font-semibold text-slate-900 dark:text-white"><%= @package.line_items.size %></div>
+      </div>
+      <div>
+        <div class="text-sm text-slate-600">Package total</div>
+        <div class="text-xl font-semibold text-slate-900 dark:text-white"><%= number_to_currency(@package.line_items.sum(:total) || 0) %></div>
+      </div>
+      <div class="sm:text-right">
+        <a href="#" class="inline-flex items-center justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">Confirm</a>
+      </div>
+    </div>
+  </div>
+</div>

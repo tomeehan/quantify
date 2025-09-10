@@ -10,10 +10,16 @@
       <%= render "navbar" %>
     </header>
 
-    <main>
-      <%= content_for?(:content) ? yield(:content) : yield %>
+    <main class="bg-slate-50">
+      <% if defined?(@full_screen) && @full_screen %>
+        <%= content_for?(:content) ? yield(:content) : yield %>
+      <% else %>
+        <div class="container mx-auto sm:px-6 lg:px-8">
+          <%= content_for?(:content) ? yield(:content) : yield %>
+        </div>
+      <% end %>
     </main>
 
-    <%= render "footer" unless hotwire_native_app? %>
+
   </body>
 </html>

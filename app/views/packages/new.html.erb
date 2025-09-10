@@ -1,0 +1,17 @@
+<div class="my-4 lg:px-4">
+  <%= render "shared/page_header",
+            title: "New Package",
+            breadcrumbs: [
+              { name: "Projects", href: projects_path },
+              { name: @bill.project.name, href: project_path(@bill.project) },
+              { name: "Packages", href: bill_packages_path(@bill) },
+              { name: "New" }
+            ],
+            actions: (capture do %>
+              <%= link_to "Back", bill_packages_path(@bill), class: "btn btn-light" %>
+            <% end) %>
+
+  <div class="lg:mt-6 lg:p-10 p-4 bg-white rounded-lg border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+    <%= render "form" %>
+  </div>
+</div>

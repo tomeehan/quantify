@@ -1,0 +1,61 @@
+<%# Locals: package: %>
+<div class="mt-8">
+  <div class="relative rounded-lg outline outline-1 outline-black/5 dark:-outline-offset-1 dark:outline-white/10 bg-white dark:bg-gray-800/50">
+    <div class="overflow-x-auto overflow-y-auto max-h-[60vh]">
+      <div class="min-w-[1000px]">
+        <% grid_style = 'grid-template-columns: 200px 300px 100px 120px 140px 120px 160px 44px;' %>
+        <!-- Header (not a table) -->
+        <div class="grid gap-3 px-4 py-3 bg-gray-50 dark:bg-gray-800/75 text-xs font-semibold text-gray-900 dark:text-gray-200 sticky top-0 z-10" style="<%= grid_style %>">
+          <div>Item</div>
+          <div>Description</div>
+          <div>Qty</div>
+          <div>Unit</div>
+          <div>Rate</div>
+          <div>Markup %</div>
+          <div>Total</div>
+          <div class="text-right"><span class="sr-only">Remove</span></div>
+        </div>
+
+        <!-- Body rows -->
+        <div class="divide-y divide-gray-200 dark:divide-white/10">
+          <% package.line_items.each do |li| %>
+            <div class="grid gap-3 px-4 py-3 items-center" style="<%= grid_style %>">
+              <input type="text" value="<%= li.item %>" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900/50 dark:text-white" />
+              <input type="text" value="<%= li.description %>" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900/50 dark:text-white" />
+              <input type="number" value="<%= li.quantity %>" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900/50 dark:text-white" />
+              <select class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900/50 dark:text-white">
+                <% LineItem::UNITS.each do |u| %>
+                  <option value="<%= u %>" <%= "selected" if u == li.unit %>><%= u %></option>
+                <% end %>
+              </select>
+              <input type="number" step="0.01" value="<%= li.rate %>" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900/50 dark:text-white" />
+              <input type="number" step="0.01" value="<%= li.markup %>" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900/50 dark:text-white" />
+              <input type="number" step="0.01" value="<%= li.total %>" class="w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900/50 dark:text-white" />
+              <button type="button" class="ml-auto inline-flex items-center justify-center rounded hover:text-red-600 text-gray-400 focus:outline-none" aria-label="Remove line item">
+                <svg viewBox="0 0 20 20" fill="currentColor" class="size-5" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 0 1 1.414 0L10 8.586l4.293-4.293a1 1 0 1 1 1.414 1.414L11.414 10l4.293 4.293a1 1 0 0 1-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 0 1-1.414-1.414L8.586 10 4.293 5.707a1 1 0 0 1 0-1.414Z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+          <% end %>
+
+          <!-- Add line item row -->
+          <div class="grid gap-3 px-4 py-3 items-center bg-gray-50/50 dark:bg-gray-800/40" style="<%= grid_style %>">
+            <input type="text" placeholder="Add item" class="w-full rounded-md border-dashed border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-900/30 dark:text-white" />
+            <input type="text" placeholder="Description" class="w-full rounded-md border-dashed border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-900/30 dark:text-white" />
+            <input type="number" placeholder="0" class="w-full rounded-md border-dashed border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-900/30 dark:text-white" />
+            <select class="w-full rounded-md border-dashed border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-900/30 dark:text-white">
+              <% LineItem::UNITS.each do |u| %>
+                <option value="<%= u %>"><%= u %></option>
+              <% end %>
+            </select>
+            <input type="number" step="0.01" placeholder="0.00" class="w-full rounded-md border-dashed border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-900/30 dark:text-white" />
+            <input type="number" step="0.01" placeholder="0.00" class="w-full rounded-md border-dashed border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-900/30 dark:text-white" />
+            <input type="number" step="0.01" placeholder="0.00" class="w-full rounded-md border-dashed border-2 border-gray-300 dark:border-gray-700 dark:bg-gray-900/30 dark:text-white" />
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

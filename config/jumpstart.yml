@@ -9,16 +9,15 @@ support_email: support@quantifyai.com
 default_from_email: QuantifyAI <no-reply@quantifyai.com>
 background_job_processor: sidekiq
 email_provider: sendgrid
-account_types: both
+account_types: team
 apns: false
 fcm: false
 integrations:
 omniauth_providers:
-- facebook
-- twitter
 payment_processors:
 - stripe
-- paypal
 - braintree
+- paypal
 multitenancy:
 gems:
+- acts_as_tenant

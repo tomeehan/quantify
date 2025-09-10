@@ -2,3 +2,6 @@
 
 <%# Place any links for the LEFT side of the nav bar here. For example: %>
 <%#= nav_link_to "Dashboard", root_path %>
+<% if user_signed_in? %>
+  <%= nav_link_to "Projects", projects_path %>
+<% end %>

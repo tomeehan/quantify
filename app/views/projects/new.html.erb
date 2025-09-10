@@ -1,0 +1,15 @@
+<div class="my-4 lg:px-4">
+  <%= render "shared/page_header",
+            title: "New Project",
+            breadcrumbs: [
+              { name: "Projects", href: projects_path },
+              { name: "New Project" }
+            ],
+            actions: (capture do %>
+              <%= link_to "Back", projects_path, class: "btn btn-light" %>
+            <% end) %>
+
+  <div class="lg:mt-6 lg:p-10 p-4 bg-white rounded-lg border border-gray-200 dark:bg-gray-900 dark:border-gray-800">
+    <%= render "form", project: @project %>
+  </div>
+</div>
