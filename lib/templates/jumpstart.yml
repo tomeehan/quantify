@@ -1,5 +1,5 @@
 --- !ruby/object:Jumpstart::Configuration
-application_name: Jumpstart
+application_name: QuantifyAI
 background_job_processor: sidekiq
 email_provider: sendgrid
 omniauth_providers:

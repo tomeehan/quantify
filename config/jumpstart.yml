@@ -1,0 +1,24 @@
+---
+application_name: QuantifyAI
+business_name: QuantifyAI, LLC
+business_address: |-
+  123 Main Street
+  San Francisco, CA 94102
+domain: quantifyai.com
+support_email: support@quantifyai.com
+default_from_email: QuantifyAI <no-reply@quantifyai.com>
+background_job_processor: sidekiq
+email_provider: sendgrid
+account_types: both
+apns: false
+fcm: false
+integrations:
+omniauth_providers:
+- facebook
+- twitter
+payment_processors:
+- stripe
+- paypal
+- braintree
+multitenancy:
+gems:

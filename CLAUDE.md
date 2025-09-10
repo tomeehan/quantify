@@ -103,6 +103,96 @@ Routes are modularized in `config/routes/`:
 - `config/routes/` - Modular route definitions
 - `app/components/` - View components for reusable UI
 
+## BoQ AI Application Architecture
+
+### BoQ AI Data Model
+The BoQ (Bill of Quantities) AI system uses the following core domain models:
+
+**Project**
+- `client` - Client name/organization
+- `title` - Project title
+- `address` - Project location
+- `region` - Geographic region for rate application
+
+**Element**
+- `project` - Associated project
+- `nrm_code` - New Rules of Measurement code
+- `name` - Element description
+- `params` - Physical parameters (length/width/height)
+
+**NrmItems**
+- `nrm_code` - NRM classification code
+- `title` - NRM item description
+- `unit_rule` - Measurement unit rules
+
+**Assembly**
+- `nrm_item` - Reference to NRM item
+- `formula` - Calculation formula for quantities
+- `inputs_schema` - JSON schema for required inputs
+- `unit` - Measurement unit
+
+**Quantity**
+- `element` - Associated element
+- `assembly` - Calculation assembly used
+- `quantity` - Calculated quantity value
+- `unit` - Measurement unit
+
+**Rate**
+- `type` - Rate category (Labour, Plant, Material)
+- `unit` - Pricing unit
+- `rate_per_unit` - Unit rate value
+
+**BoqLine**
+- `quantity` - Reference to quantity calculation
+- `rate` - Applied unit rate
+- `total` - Extended line total
+- `source_json` - Audit trail data
+
+### BoQ AI User and Data Flow
+
+The application follows this user workflow:
+
+1. **Authentication & Project Setup**
+   - User logs in to the system
+   - Creates a new project with client, title, address, region
+
+2. **Element Specification**
+   - User adds specification text for building elements
+   - Supports natural language descriptions (e.g., "concrete slab", "brick wall", etc.)
+
+3. **AI Processing** 
+   - LLM processes user specifications and extracts key information
+   - System identifies relevant NRM codes and assemblies
+   - AI analyzes specifications for type, dimensions, materials, finishes
+
+4. **Clarification Loop**
+   - System identifies missing parameters needed for quantity calculations
+   - Presents clarification questions to user (e.g., "What type of reinforcement?")
+   - User provides additional parameters through forms
+
+5. **Quantity Calculation**
+   - LLM applies assembly formulas using confirmed parameters
+   - Calculates quantities deterministically from assembly rules
+   - Links to external Rate DB for current pricing
+
+6. **Rate Application**
+   - System applies regional rates from Rate DB
+   - Calculates line totals (quantity × rate)
+   - Maintains audit trail of all calculations
+
+7. **BoQ Generation**
+   - User can export complete BoQ to various formats
+   - Generates snapshot for historical record
+   - Provides detailed quantity breakdown with assumptions
+
+### Key Components
+
+- **LLM Integration**: AI-powered specification parsing and NRM code suggestion
+- **Rate DB**: External database providing current regional unit rates
+- **Assembly Engine**: Deterministic quantity calculation using stored formulas
+- **Clarification System**: Interactive parameter collection for missing data
+- **Snapshot Management**: Historical BoQ preservation for audit purposes
+
 ## Development Notes
 
 - **Current account** available via `current_account` helper in controllers/views
